@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b18">
+<meta name="description" content="CloudPulse — an AWS static website hosting and cloud monitoring portfolio project.">
+<title>CloudPulse | A Living View of the Cloud</title>
+
+<style>
+:root {
+  --bg: #070b18;
+  --panel: rgba(17, 25, 48, .78);
+  --line: rgba(151, 179, 255, .15);
+  --text: #f2f6ff;
+  --muted: #98a7c6;
+  --cyan: #52f4e4;
+  --purple: #a68aff;
+  --green: #70f0ad;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 85% 5%, #22205a 0, transparent 34%),
+    radial-gradient(ellipse at 5% 35%, #08384b 0, transparent 30%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .16;
+  background-image: radial-gradient(#91b5ff 0.65px, transparent .65px);
+  background-size: 25px 25px;
+}
+a { color: inherit; text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.wrap { width: min(1120px, 91%); margin: auto; }
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0; border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: -.5px; }
+.brand-icon {
+  display: grid; place-items: center; width: 38px; height: 38px;
+  border-radius: 12px; color: var(--cyan);
+  background: linear-gradient(135deg, #183e53, #24214f);
+  border: 1px solid #4bdacb55; font-size: 21px;
+}
+.brand span { color: var(--cyan); }
+.navlinks { display: flex; gap: 25px; align-items: center; font-size: 13px; color: var(--muted); }
+.navlinks a:hover { color: var(--cyan); }
+.nav-cta {
+  border: 1px solid #52f4e455; border-radius: 999px;
+  padding: 9px 15px; color: var(--cyan) !important;
+}
+.hero {
+  display: grid; grid-template-columns: 1.08fr .92fr; gap: 42px;
+  align-items: center; padding: 80px 0 65px; min-height: 510px;
+}
+.eyebrow {
+  color: var(--cyan); text-transform: uppercase; letter-spacing: 2.3px;
+  font-size: 11px; font-weight: 800;
+}
+.pulse-dot {
+  display: inline-block; width: 7px; height: 7px; margin-right: 8px;
+  border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 14px var(--green);
+}
+h1 {
+  font-size: clamp(42px, 6.3vw, 76px); line-height: 1.02;
+  letter-spacing: -4px; margin: 22px 0;
+}
+.gradient {
+  background: linear-gradient(100deg, var(--cyan), #91a6ff 55%, var(--purple));
+  color: transparent; background-clip: text; -webkit-background-clip: text;
+}
+.hero p { max-width: 520px; color: var(--muted); font-size: 16px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 18px; border-radius: 12px; font-size: 13px;
+  font-weight: 750; transition: transform .2s, box-shadow .2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.primary { background: var(--cyan); color: #07151a; box-shadow: 0 0 28px #52f4e425; }
+.secondary { border: 1px solid var(--line); background: #ffffff06; }
+.hero-note { color: #7e8da9; font-size: 11px; margin-top: 17px; }
+
+.visual {
+  min-height: 340px; position: relative; display: grid; place-items: center;
+  overflow: hidden; border: 1px solid var(--line); border-radius: 26px;
+  background: radial-gradient(ellipse at center, #1a2852 0, #0b1125 58%, #080d1b 100%);
+  box-shadow: inset 0 0 55px #617cff0b, 0 20px 70px #0003;
+}
+.visual::after {
+  content: ""; position: absolute; width: 250px; height: 250px;
+  border-radius: 50%; border: 1px solid #52f4e422;
+  box-shadow: 0 0 50px #52f4e408;
+}
+.orbit {
+  position: absolute; width: 245px; height: 245px; border-radius: 50%;
+  border: 1px dashed #8d9bff4b; animation: spin 24s linear infinite;
+}
+.orbit.two { width: 175px; height: 175px; border-color: #52f4e44d; animation-duration: 17s; animation-direction: reverse; }
+.orbit::before {
+  content: ""; position: absolute; width: 9px; height: 9px; border-radius: 50%;
+  top: 24px; left: 30px; background: var(--cyan); box-shadow: 0 0 18px var(--cyan);
+}
+.orbit.two::before { background: var(--purple); box-shadow: 0 0 18px var(--purple); top: 16px; left: 25px; }
+.core {
+  width: 108px; height: 108px; border-radius: 30px; display: grid; place-items: center;
+  background: linear-gradient(140deg, #17485b, #322a67);
+  border: 1px solid #52f4e466; box-shadow: 0 0 60px #52f4e42b;
+  font-size: 47px; z-index: 1; animation: float 4s ease-in-out infinite;
+}
+.visual-label {
+  position: absolute; bottom: 24px; left: 24px; right: 24px;
+  display: flex; justify-content: space-between; gap: 10px; font-size: 11px; color: var(--muted);
+}
+.visual-label strong { color: var(--cyan); font-weight: 650; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes float { 50% { transform: translateY(-8px); } }
+
+.section { padding: 48px 0; }
+.section-head { margin-bottom: 23px; }
+.section-head h2 { font-size: clamp(25px, 4vw, 36px); letter-spacing: -1.4px; margin: 8px 0; }
+.section-head p { color: var(--muted); margin: 0; font-size: 14px; }
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.card {
+  border: 1px solid var(--line); border-radius: 19px; padding: 22px;
+  background: linear-gradient(145deg, #ffffff08, #ffffff02);
+  backdrop-filter: blur(12px); transition: transform .2s, border-color .2s;
+}
+.card:hover { transform: translateY(-4px); border-color: #52f4e455; }
+.card-top { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 12px; }
+.card-icon { color: var(--cyan); font-size: 20px; }
+.metric-value { font-size: 30px; font-weight: 800; letter-spacing: -1px; margin: 18px 0 3px; }
+.card small { color: var(--muted); font-size: 11px; }
+.tag {
+  display: inline-block; font-size: 10px; padding: 4px 8px;
+  border: 1px solid var(--line); border-radius: 999px; color: var(--cyan);
+}
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+.architecture { display: grid; gap: 10px; margin-top: 20px; }
+.arch-row {
+  display: flex; align-items: center; gap: 13px; padding: 13px;
+  background: #ffffff04; border: 1px solid var(--line); border-radius: 12px;
+}
+.arch-icon {
+  width: 38px; height: 38px; flex-shrink: 0; display: grid; place-items: center;
+  border-radius: 10px; background: #52f4e411; color: var(--cyan); font-size: 19px;
+}
+.arch-row strong { display: block; font-size: 13px; }
+.arch-row small { color: var(--muted); font-size: 11px; }
+.arch-arrow { text-align: center; color: #60799c; font-size: 16px; line-height: .7; }
+.stack { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+.stack span { border: 1px solid var(--line); background: #ffffff05; border-radius: 10px; padding: 8px 11px; font-size: 11px; color: #c7d4ed; }
+
+.timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.phase { position: relative; }
+.phase-num { font-size: 11px; color: var(--cyan); letter-spacing: 1.5px; }
+.phase h3 { font-size: 16px; margin: 10px 0 6px; }
+.phase p { color: var(--muted); font-size: 12px; margin: 0; }
+.footer {
+  margin-top: 55px; border-top: 1px solid var(--line);
+  padding: 25px 0 32px; display: flex; justify-content: space-between;
+  align-items: center; gap: 15px; color: var(--muted); font-size: 11px;
+}
+.footer strong { color: var(--text); }
+.backtop { color: var(--cyan); }
+@media (max-width: 760px) {
+  .navlinks { gap: 13px; }
+  .navlinks a:not(.nav-cta) { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 55px 0 35px; gap: 30px; }
+  h1 { letter-spacing: -2.5px; }
+  .visual { min-height: 310px; }
+  .metrics { grid-template-columns: 1fr; }
+  .grid2 { grid-template-columns: 1fr; }
+  .timeline { grid-template-columns: 1fr; }
+  .footer { flex-direction: column; align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#home" aria-label="CloudPulse home">
+      <div class="brand-icon">⌁</div>
+      <div>Cloud<span>Pulse</span></div>
+    </a>
+    <div class="navlinks">
+      <a href="#overview">Overview</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#journey">Build journey</a>
+      <a class="nav-cta" href="#architecture">Explore project ↗</a>
+    </div>
+  </nav>
+
+  <main id="home">
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><span class="pulse-dot"></span>A CLOUD PROJECT · AWS</div>
+        <h1>A living view<br>of the <span class="gradient">cloud.</span></h1>
+        <p>
+          Meet CloudPulse — a modern cloud observability showcase.
+          Built to host a website on Amazon S3 and explore request
+          monitoring through Amazon CloudWatch.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="#overview">Explore the experience ↘</a>
+          <a class="btn secondary" href="#architecture">See the architecture</a>
+        </div>
+        <div class="hero-note">DESIGNED WITH CURIOSITY. BUILT ON AWS.</div>
+      </div>
+
+      <div class="visual" role="img" aria-label="Animated cloud network illustration">
+        <div class="orbit"></div>
+        <div class="orbit two"></div>
+        <div class="core">☁</div>
+        <div class="visual-label">
+          <span>NETWORK VISUALIZATION</span>
+          <strong>● Animated demo</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="section-head">
+        <div class="eyebrow">01 / THE OVERVIEW</div>
+        <h2>Small project. <span class="gradient">Cloud thinking.</span></h2>
+        <p>A clear view of what this project is designed to demonstrate.</p>
+      </div>
+      <div class="metrics">
+        <article class="card">
+          <div class="card-top"><span>Hosting layer</span><span class="card-icon">◈</span></div>
+          <div class="metric-value">Amazon S3</div>
+          <small>Static website hosting</small>
+          <div style="margin-top:17px"><span class="tag">OBJECT STORAGE</span></div>
+        </article>
+        <article class="card">
+          <div class="card-top"><span>Monitoring layer</span><span class="card-icon">⌁</span></div>
+          <div class="metric-value">CloudWatch</div>
+          <small>Request metrics and dashboard</small>
+          <div style="margin-top:17px"><span class="tag">OBSERVABILITY</span></div>
+        </article>
+        <article class="card">
+          <div class="card-top"><span>Website status</span><span class="card-icon">◎</span></div>
+          <div class="metric-value" id="site-status">Checking</div>
+          <small id="site-detail">Checking this page in your browser</small>
+          <div style="margin-top:17px"><span class="tag">BROWSER CHECK</span></div>
+        </article>
+      </div>
+      <p style="color:var(--muted);font-size:11px;margin-top:13px">
+        Note: This is a portfolio interface, not a live CloudWatch data feed.
+        Request counts and error rates are not fabricated or simulated.
+      </p>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="section-head">
+        <div class="eyebrow">02 / UNDER THE HOOD</div>
+        <h2>Follow the <span class="gradient">signal.</span></h2>
+        <p>The AWS services used in this project and their roles.</p>
+      </div>
+      <div class="grid2">
+        <article class="card">
+          <h3 style="margin-top:0">Request journey</h3>
+          <div class="architecture">
+            <div class="arch-row">
+              <div class="arch-icon">↗</div>
+              <div><strong>01 · Visitor</strong><small>Opens the website in a browser</small></div>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-row">
+              <div class="arch-icon">▧</div>
+              <div><strong>02 · Amazon S3</strong><small>Stores and serves index.html</small></div>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-row">
+              <div class="arch-icon">⌁</div>
+              <div><strong>03 · Amazon CloudWatch</strong><small>Collects configured request metrics</small></div>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <h3 style="margin-top:0">Technology stack</h3>
+          <p style="color:var(--muted);font-size:13px">
+            A lightweight frontend hosted on AWS, with a monitoring dashboard
+            configured separately in the AWS Console.
+          </p>
+          <div class="stack">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+            <span>Amazon S3</span><span>Amazon CloudWatch</span>
+            <span>Request Metrics</span><span>Responsive UI</span>
+          </div>
+          <div style="border-top:1px solid var(--line);margin-top:25px;padding-top:19px">
+            <div class="card-top"><span>Project region</span><strong style="color:var(--text)">Mumbai · ap-south-1</strong></div>
+            <div class="card-top" style="margin-top:12px"><span>Hosting type</span><strong style="color:var(--text)">Static website</strong></div>
+            <div class="card-top" style="margin-top:12px"><span>Monitoring</span><strong style="color:var(--text)">Request metrics</strong></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="journey">
+      <div class="section-head">
+        <div class="eyebrow">03 / BUILD JOURNEY</div>
+        <h2>From object to <span class="gradient">observation.</span></h2>
+        <p>The practical stages behind CloudPulse.</p>
+      </div>
+      <div class="timeline">
+        <article class="card phase">
+          <div class="phase-num">PHASE 01</div>
+          <h3>Host</h3>
+          <p>Create an S3 bucket, upload the website files and configure static website hosting.</p>
+        </article>
+        <article class="card phase">
+          <div class="phase-num">PHASE 02</div>
+          <h3>Observe</h3>
+          <p>Configure request metrics and explore AllRequests, GetRequests and error metrics in CloudWatch.</p>
+        </article>
+        <article class="card phase">
+          <div class="phase-num">PHASE 03</div>
+          <h3>Improve</h3>
+          <p>Review the dashboard, document the architecture and identify future monitoring improvements.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div><strong>CloudPulse</strong> · An AWS learning project</div>
+    <div>Built with focus, curiosity & ☁</div>
+    <a class="backtop" href="#home">Back to top ↑</a>
+  </footer>
+</div>
+
+<script>
+  // This checks that the current page has loaded in the browser.
+  // It does NOT verify AWS infrastructure health or CloudWatch metrics.
+  const status = document.getElementById("site-status");
+  const detail = document.getElementById("site-detail");
+
+  if (document.readyState === "complete") {
+    status.textContent = "Loaded";
+    detail.textContent = "This page loaded in your browser";
+  } else {
+    window.addEventListener("load", () => {
+      status.textContent = "Loaded";
+      detail.textContent = "This page loaded in your browser";
+    });
+  }
+</script>
+</body>
+</html>
